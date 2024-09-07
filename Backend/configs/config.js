@@ -1,6 +1,8 @@
 module.exports = {
-  user: process.env.PG_USER, // PostgreSQL username
-  database: process.env.PG_DATABASE, // PostgreSQL database name
-  password: process.env.PG_PASSWORD, // PostgreSQL password
-  port: process.env.PG_PORT, // PostgreSQL port
+  host: process.env.DB_HOST,       // localhost
+  user: process.env.DB_USER,       // ehealthuser  
+  password: process.env.DB_PASSWORD, // 123456789
+  database: process.env.DB_NAME,   // ehealthdb
+  port: process.env.DB_PORT,       // 5432
+  ssl: false
 };

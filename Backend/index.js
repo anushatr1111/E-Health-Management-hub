@@ -28,14 +28,18 @@ app.use("/patients", patientRouter);
 app.use("/prescriptions", prescriptionRouter);
 app.use("/reports", reportRouter);
 
-app.listen(process.env.port, async () => {
-  await db.query("SELECT NOW()", (err, result) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-    } else {
-      console.log("Connected to the database at", result.rows[0].now);
-    }
-  });
-  console.log("Connected to DB");
-  console.log(`Listening at port ${process.env.port}`);
+// Fix 1: Use PORT (uppercase) and provide fallback
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, async () => {
+  try {
+    // Fix 2: Better database connection testing using Promise-based approach
+    const result = await db.query("SELECT NOW()");
+    console.log("Connected to the database at", result.rows[0].now);
+    console.log("Connected to DB");
+  } catch (error) {
+    console.error("Error connecting to the database:", error.message);
+    console.error("Full error:", error);
+  }
+  console.log(`Server listening at port ${PORT}`);
 });
